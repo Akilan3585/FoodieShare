@@ -10,10 +10,11 @@ const ShareRecipe = () => {
         description: '',
         ingredients: [{ name: '', quantity: '' }],
         instructions: [''],
+        image: '',
         cookingTime: '',
+        servings: '',
         difficulty: 'Medium',
-        cuisine: '',
-        image: '' // Optional now
+        cuisine: ''
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -66,13 +67,15 @@ const ShareRecipe = () => {
         if (!formData.title.trim()) return 'Recipe title is required';
         if (!formData.description.trim()) return 'Recipe description is required';
         if (!formData.cookingTime || formData.cookingTime <= 0) return 'Valid cooking time is required';
+        if (!formData.servings || formData.servings <= 0) return 'Number of servings is required';
+        if (!formData.image.trim()) return 'Image URL is required';
         if (!formData.cuisine.trim()) return 'Cuisine type is required';
         
         const emptyIngredient = formData.ingredients.find(ing => !ing.name.trim() || !ing.quantity.trim());
-        if (emptyIngredient) return 'All ingredient fields must be filled';
+        if (emptyIngredient) return 'All ingredients must have both name and quantity';
         
         const emptyInstruction = formData.instructions.find(inst => !inst.trim());
-        if (emptyInstruction) return 'All instruction steps must be filled';
+        if (emptyInstruction) return 'All instructions must be filled';
         
         return null;
     };
@@ -89,34 +92,22 @@ const ShareRecipe = () => {
         setError('');
 
         try {
-            // Format ingredients array
-            const formattedIngredients = formData.ingredients.map(ing => 
-                `${ing.quantity} ${ing.name}`.trim()
-            );
-
-            // Convert cookingTime to number and format data
             const recipeData = {
                 ...formData,
-                ingredients: formattedIngredients,
                 cookingTime: Number(formData.cookingTime),
-                createdAt: new Date().toISOString()
+                servings: Number(formData.servings),
+                // Convert ingredients array of objects to array of strings
+                ingredients: formData.ingredients.map(ing => `${ing.quantity} ${ing.name}`),
+                // Filter out any empty instructions
+                instructions: formData.instructions.filter(inst => inst.trim())
             };
             
             const response = await recipes.create(recipeData);
             console.log('Recipe created:', response.data);
-            
-            // Show success message and redirect
-            const successMessage = 'Recipe shared successfully!';
-            navigate('/recipes', { 
-                state: { 
-                    message: successMessage,
-                    recipe: response.data
-                }
-            });
+            navigate('/recipes');
         } catch (err) {
             console.error('Error creating recipe:', err);
-            setError(err.response?.data?.error || 'Failed to share recipe. Please try again.');
-            window.scrollTo(0, 0); // Scroll to top to show error
+            setError(err.response?.data?.message || 'Failed to share recipe. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -220,6 +211,31 @@ const ShareRecipe = () => {
                         onChange={handleChange}
                         required
                         min="1"
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Servings</label>
+                    <input
+                        type="number"
+                        name="servings"
+                        value={formData.servings}
+                        onChange={handleChange}
+                        required
+                        min="1"
+                        placeholder="Number of servings"
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label>Image URL</label>
+                    <input
+                        type="text"
+                        name="image"
+                        value={formData.image}
+                        onChange={handleChange}
+                        required
+                        placeholder="Enter image URL"
                     />
                 </div>
 
