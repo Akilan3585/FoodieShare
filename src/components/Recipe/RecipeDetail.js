@@ -13,7 +13,25 @@ const RecipeDetail = () => {
         const fetchRecipe = async () => {
             try {
                 const response = await recipes.getById(id);
-                setRecipe(response.data);
+                console.log('Recipe data:', response.data);
+                
+                // Ensure ingredients are in the correct format
+                const formattedRecipe = {
+                    ...response.data,
+                    ingredients: response.data.ingredients.map(ingredient => {
+                        if (typeof ingredient === 'string') {
+                            // If ingredient is a string, parse it into name and quantity
+                            const [quantity, ...nameParts] = ingredient.split(' ');
+                            return {
+                                name: nameParts.join(' '),
+                                quantity: quantity
+                            };
+                        }
+                        return ingredient;
+                    })
+                };
+                
+                setRecipe(formattedRecipe);
                 setError('');
             } catch (err) {
                 setError('Failed to fetch recipe details');
@@ -48,12 +66,29 @@ const RecipeDetail = () => {
             <div className="recipe-section">
                 <h2>Ingredients</h2>
                 <ul className="ingredients-list">
-                    {recipe.ingredients.map((ingredient, index) => (
-                        <li key={index}>
-                            <span className="ingredient-name">{ingredient.name}</span>
-                            <span className="ingredient-quantity">{ingredient.quantity}</span>
-                        </li>
-                    ))}
+                    {recipe.ingredients && recipe.ingredients.length > 0 ? (
+                        recipe.ingredients.map((ingredient, index) => {
+                            // Extract unit from name if it exists
+                            let name = ingredient.name;
+                            let unit = '';
+                            const firstWord = name.split(' ')[0];
+                            if (['ml', 'kg', 'g', 'tsp', 'tbsp'].includes(firstWord.toLowerCase())) {
+                                unit = firstWord;
+                                name = name.substring(unit.length).trim();
+                            }
+                            
+                            return (
+                                <li key={index}>
+                                    <span className="ingredient-name">{name}</span>
+                                    <span className="ingredient-quantity">
+                                        {ingredient.quantity} {unit}
+                                    </span>
+                                </li>
+                            );
+                        })
+                    ) : (
+                        <li>No ingredients available</li>
+                    )}
                 </ul>
             </div>
 

@@ -178,3 +178,130 @@
     margin-bottom: 1rem;
     line-height: 1.5;
 }
+
+/* Recipe Detail Styles */
+.recipe-detail-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.recipe-detail-container h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.recipe-meta-info {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.recipe-meta-info span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.recipe-section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.recipe-section h2 {
+    color: #fc8019;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #fc8019;
+}
+
+.recipe-section p {
+    color: #444;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+.ingredients-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #eee;
+    line-height: 1.4;
+}
+
+.ingredient-name {
+    color: #2c3e50;
+    font-weight: 500;
+    flex: 1;
+    padding-right: 20px;
+}
+
+.ingredient-quantity {
+    color: #666;
+    text-align: right;
+    white-space: nowrap;
+    min-width: 60px;
+}
+
+.instructions-list {
+    padding-left: 1.5rem;
+}
+
+.instructions-list li {
+    color: #444;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    padding-left: 0.5rem;
+}
+
+.recipe-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    color: #666;
+    font-size: 0.9rem;
+    text-align: right;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.error-message {
+    text-align: center;
+    padding: 2rem;
+    color: #dc3545;
+    font-size: 1.2rem;
+}
+
+.not-found {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1.2rem;
+}
