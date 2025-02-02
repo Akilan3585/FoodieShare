@@ -16,7 +16,29 @@ router.get('/', async (req, res) => {
 });
 
 
-
+// Get single recipe by ID
+router.get('/:id', async (req, res) => {
+    console.log('Fetching recipe with ID:', req.params.id);
+    try {
+        const recipe = await Recipe.findById(req.params.id)
+            .populate('author', 'username profilePicture')
+            .populate('comments.user', 'username profilePicture');
+            
+        console.log('Found recipe:', recipe);
+            
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+        
+        res.json(recipe);
+    } catch (error) {
+        console.error('Error fetching recipe:', error);
+        if (error.kind === 'ObjectId') {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+        res.status(500).json({ message: 'Server error' });
+    }
+});
 // Create recipe
 router.post('/', auth, async (req, res) => {
     try {

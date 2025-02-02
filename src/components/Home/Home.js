@@ -27,7 +27,7 @@ const Home = () => {
   }, []);
 
   const handleRecipeClick = (recipeId) => {
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipes/${recipeId}`);
   };
 
   return (
