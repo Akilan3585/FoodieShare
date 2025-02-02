@@ -34,15 +34,7 @@ const RecipeList = () => {
 
     return (
         <div className="recipe-search-container">
-            <form onSubmit={handleSearch} className="search-bar">
-                <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search for recipes..."
-                />
-                <button type="submit">Search</button>
-            </form>
+         
 
             {error && <div className="error-message">{error}</div>}
 

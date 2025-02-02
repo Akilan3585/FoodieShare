@@ -4,6 +4,7 @@
     padding: 2rem;
     background: white;
     border-radius: 8px;
+    padding-top: 2rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -141,6 +142,7 @@
 .recipes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding-top: 4rem;
     gap: 2rem;
 }
 
