@@ -4,7 +4,6 @@ import { recipes } from '../../services/api';
 import './Recipe.css';
 
 const RecipeList = () => {
-    const [searchQuery, setSearchQuery] = useState('');
     const [recipeList, setRecipeList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -26,11 +25,6 @@ const RecipeList = () => {
     useEffect(() => {
         fetchRecipes();
     }, []);
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        fetchRecipes(searchQuery);
-    };
 
     return (
         <div className="recipe-search-container">
